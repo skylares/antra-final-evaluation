@@ -6,3 +6,67 @@
   --green: #4caf50;
   --red: #c94c4c;
 }
+
+.todos-container {
+  min-width: 400px;
+  padding: 30px;
+  border-radius: 10px;
+  min-height: 500px;
+  background-color: var(--off-white);
+  border: 5px solid var(--tan);
+}
+
+.todo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: var(--tan);
+  border-radius: 15px;
+  padding: 10px;
+  height: 100px;
+}
+
+.todo__title {
+  margin-right: auto;
+  font-size: 25px;
+}
+
+.todo__edit-button, .todo__delete-button, .todo-form__button {
+  border: none;
+  width: 100px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 3px;
+  color: var(--off-white);
+
+}
+
+.todo__edit-button {
+  background-color: var(--blue);
+  margin-right: 10px;
+}
+
+.todo__delete-button {
+  background-color: var(--red);
+}
+
+.todo-form__input {
+  font-size: 25px;
+  width: 500px;
+  height: 50px;
+  border-radius: 10px;
+
+}
+
+.todo-form__button {
+
+  background-color: var(--blue);
+  margin-left: 10px;
+
+
+}
+
+form {
+  display: flex;
+  justify-content: center;
+}
