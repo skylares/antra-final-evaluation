@@ -31,7 +31,7 @@
   font-size: 25px;
 }
 
-.todo__edit-button, .todo__delete-button, .todo-form__button {
+.todo__edit-button, .todo__delete-button, .todo-form__button, .todo__edit-button--submit {
   border: none;
   width: 100px;
   height: 50px;
@@ -41,7 +41,7 @@
 
 }
 
-.todo__edit-button {
+.todo__edit-button, .todo__edit-button--submit {
   background-color: var(--blue);
   margin-right: 10px;
 }

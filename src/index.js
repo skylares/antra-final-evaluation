@@ -46,7 +46,7 @@ async function initEvents() {
   });
 
   todosContainer.addEventListener("click", e => {
-    if (e.target.classList[0] === 'todo__edit-button') console.log(e.target.dataset.id);
+    if (e.target.classList[0] === 'todo__edit-button') editTodo(e);
     if (e.target.classList[0] === 'todo__delete-button') deleteTodo(e.target.dataset.id);
     if (e.target.classList[0] === 'todo__title') console.log(e.target.dataset.id);
   })
@@ -82,7 +82,28 @@ async function deleteTodo(id) {
   renderTodos(state.getTodos);
 }
 
+// EDIT
+async function editTodo(e) {
 
+  let todo = state.getTodos.find(todo => todo.id === e.target.dataset.id);
+
+  e.target.parentElement.innerHTML = `
+    <input class="todo__edit-input" value="${todo.title}"}/>
+    <button class="todo__edit-button--submit" data-id=${todo.id}>submit changes</button>
+    <button class="todo__delete-button" data-id=${todo.id}>delete</button>
+  `;
+
+  const editInputField = document.querySelector('.todo__edit-input');
+  const submittedEditButton = document.querySelector('.todo__edit-button--submit');
+
+  submittedEditButton.addEventListener("click", event => {
+    event.target.parentElement.innerHTML = `
+      <p class="todo__title" data-id=${todo.id}>${editInputField.value}</p>
+      <button class="todo__edit-button" data-id=${todo.id}>edit</button>
+      <button class="todo__delete-button" data-id=${todo.id}>delete</button>
+    `;
+  });
+}
 
 
 initEvents();
@@ -90,30 +111,6 @@ initEvents();
 
 
 
-
-
-
-
-// function completeTodo(id, completed, title) {
-
-//   let completedState = !completed;
-
-//   fetch(API_URL + id, {
-//     method: 'PATCH', 
-//     body: JSON.stringify({
-//       completed: completedState
-//     }), 
-//     headers: {'Content-Type': 'application/json'}
-//   })
-//   .then(res => res.json())
-//   .then(todo => renderTodos());
-// }
-
-
-// function editTodo(id, event) {
-
-
-// }
 
 
 
