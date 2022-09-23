@@ -1,0 +1,8 @@
+* {
+  box-sizing: border-box;
+  --blue: #008cba;
+  --tan: #e6e2d3;
+  --off-white: #f0f0f0;
+  --green: #4caf50;
+  --red: #c94c4c;
+}
