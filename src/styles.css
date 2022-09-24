@@ -5,11 +5,13 @@
   --off-white: #f0f0f0;
   --green: #4caf50;
   --red: #c94c4c;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .todos-container {
-  min-width: 400px;
   padding: 30px;
+  margin-top: 20px;
+  min-width: 400px;
   border-radius: 10px;
   min-height: 500px;
   background-color: var(--off-white);
@@ -26,7 +28,7 @@
   height: 100px;
 }
 
-.todo__title {
+.todo__title, .todo__edit-input {
   margin-right: auto;
   font-size: 25px;
 }
@@ -35,10 +37,9 @@
   border: none;
   width: 100px;
   height: 50px;
-  font-size: 20px;
   border-radius: 3px;
+  font-size: 20px;
   color: var(--off-white);
-
 }
 
 .todo__edit-button, .todo__edit-button--submit {
@@ -55,15 +56,14 @@
   width: 500px;
   height: 50px;
   border-radius: 10px;
-
+  border: 2px solid var(--tan);
 }
 
 .todo-form__button {
-
   background-color: var(--blue);
   margin-left: 10px;
-
-
+  font-weight: 500;
+  font-size: 25px;
 }
 
 form {
@@ -73,4 +73,18 @@ form {
 
 .todo__title--true {
   text-decoration: line-through;
+  color: grey;
+}
+
+.todo__empty {
+  font-size: 35px;
+  text-align: center;
+  color: grey;
+}
+
+.edit-icon, .delete-icon {
+  height: 32px;
+  width: 32px;
+  fill: var(--off-white);
+  stroke: none;
 }
