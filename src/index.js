@@ -1,7 +1,7 @@
 const API_URL = "http://localhost:3000/todos/";
 
-// const editIcon = `<svg class="edit-icon "focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="EditIcon" aria-label="fontSize small"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>`
-// const deleteIcon = `<svg class="delete-icon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="DeleteIcon" aria-label="fontSize small"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>`
+const editIcon = `<svg class="edit-icon "focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="EditIcon" aria-label="fontSize small"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>`
+const deleteIcon = `<svg class="delete-icon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="DeleteIcon" aria-label="fontSize small"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>`
 
 // state to hold todo list locally
 class State {
@@ -31,15 +31,15 @@ function renderTodos(todos) {
   else {
     todosContainer.innerHTML = todos.map(todo => (
       `<div class="todo">
-        <p class="todo__title todo__title--${todo.completed}" data-id=${todo.id}>${todo.title}</p>
-        <button class="todo__edit-button" onClick=editTodo(event) data-id=${todo.id}>edit</button>
-        <button class="todo__delete-button" onClick=deleteTodo(${todo.id}) data-id=${todo.id}>delete</button>
+        <p class="todo__title todo__title--${todo.completed}" data-id=${todo.id} onClick=completedTodo(event)>${todo.title}</p>
+        <button class="todo__edit-button" onClick=editTodo(event) data-id=${todo.id}>${editIcon}</button>
+        <button class="todo__delete-button" onClick=deleteTodo(${todo.id}) data-id=${todo.id}>${deleteIcon}</button>
       </div>`
     )).join("");
   }
 }
 
-// initialize the event listeners, render the todo list, and update local state with todo list from database
+// initialize the event listener, render the todo list, and update local state with todo list from database
 async function initEvents() {
 
   const response = await fetch(API_URL);
@@ -51,11 +51,6 @@ async function initEvents() {
     e.preventDefault();
     addTodo();
   });
-
-  todosContainer.addEventListener("click", e => {
-    // if (e.target.classList[0] === 'todo__edit-button') editTodo(e);
-    if (e.target.classList[0] === 'todo__title') completedTodo(e);
-  })
 }
 
 // ADD TODO
@@ -80,8 +75,6 @@ async function addTodo() {
 // DELETE TODO
 async function deleteTodo(id) {
 
-  console.log(event.target);
-
   await fetch(API_URL + id, {
     method: 'DELETE',  
     headers: {'Content-Type': 'application/json'}
@@ -103,8 +96,8 @@ function editTodo(e) {
 
   e.target.parentElement.innerHTML = `
     <input class="todo__edit-input" value="${todo.title}"}/>
-    <button class="todo__edit-button--submit" data-id=${todo.id}>edit</button>
-    <button class="todo__delete-button" data-id=${todo.id}>delete</button>
+    <button class="todo__edit-button--submit" data-id=${todo.id}>${editIcon}</button>
+    <button class="todo__delete-button" onClick=deleteTodo(${todo.id}) data-id=${todo.id}>${deleteIcon}</button>
   `;
 
   const editInputField = document.querySelector('.todo__edit-input');
@@ -148,45 +141,6 @@ async function completedTodo(e) {
   
   renderTodos(state.getTodos);
 }
-
-
-
-
-
-
-
-
-
-// second way to submit edit. allows enter functionality, but has a warning message about form submission canceling.
-
-// async function editTodo(e) {
-
-//   let todo = state.getTodos.find(todo => todo.id === e.target.dataset.id);
-
-//   e.target.parentElement.innerHTML = `
-//     <form class="todo__form">
-//       <input class="todo__edit-input" value="${todo.title}"}/>
-//       <button class="todo__edit-button--submit" data-id=${todo.id}>submit changes</button>
-//       <button class="todo__delete-button" data-id=${todo.id} type="submit">delete</button>
-//     </form>
-//   `;
-
-//   const editInputField = document.querySelector('.todo__edit-input');
-//   const todoForm = document.querySelector('.todo__form');
-
-//   todoForm.addEventListener("submit", event => {
-//     e.preventDefault();
-//     event.target.parentElement.innerHTML = `
-//       <form class="todo__form"></form>
-//       <p class="todo__title" data-id=${todo.id}>${editInputField.value}</p>
-//       <button class="todo__edit-button" data-id=${todo.id}>edit</button>
-//       <button class="todo__delete-button" data-id=${todo.id}>delete</button>
-//     `;
-//   });
-// }
-
-
-
 
 initEvents();
 

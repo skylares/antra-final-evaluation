@@ -87,4 +87,5 @@ form {
   width: 32px;
   fill: var(--off-white);
   stroke: none;
+  pointer-events: none;
 }
