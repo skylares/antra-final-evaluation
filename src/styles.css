@@ -70,3 +70,7 @@ form {
   display: flex;
   justify-content: center;
 }
+
+.todo__title--true {
+  text-decoration: line-through;
+}
