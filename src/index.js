@@ -85,8 +85,11 @@ async function deleteTodo(id) {
 // EDIT TODO
 function editTodo(e) {
 
-  let todo = state.getTodos.find(todo => todo.id === e.target.dataset.id);
+  let tempStateArr = state.getTodos;
+  const todoIndex = state.getTodos.findIndex(todo => todo.id === e.target.dataset.id);
+  let todo = state.getTodos[todoIndex];
 
+  console.log(tempStateArr);
   e.target.parentElement.innerHTML = `
     <input class="todo__edit-input" value="${todo.title}"}/>
     <button class="todo__edit-button--submit" data-id=${todo.id}>submit changes</button>
@@ -97,11 +100,6 @@ function editTodo(e) {
   const submittedEditButton = document.querySelector('.todo__edit-button--submit');
 
   submittedEditButton.addEventListener("click", event => {
-    event.target.parentElement.innerHTML = `
-      <p class="todo__title" data-id=${todo.id}>${editInputField.value}</p>
-      <button class="todo__edit-button" data-id=${todo.id}>edit</button>
-      <button class="todo__delete-button" data-id=${todo.id}>delete</button>
-    `;
 
     fetch(API_URL + todo.id, {
       method: 'PATCH',  
@@ -111,7 +109,11 @@ function editTodo(e) {
       })
     })
     .then(res => res.json())
-    .then(data => state.setTodos = [...state.getTodos.filter(ele => ele.id !== todo.id), data]);
+    .then(data => {
+      tempStateArr.splice(todoIndex, 1, data);
+      renderTodos(tempStateArr);
+      state.setTodos = tempStateArr;
+    });
   });
 }
 
@@ -129,8 +131,9 @@ async function completedTodo(e) {
   });
   const data = await response.json();
 
-  if (data.completed) state.setTodos = [...state.getTodos.filter(todo => todo.id !== e.target.dataset.id), data];
-  else state.setTodos = [data, ...state.getTodos.filter(todo => todo.id !== e.target.dataset.id)];
+  let tempStateArr = state.getTodos.filter(todo => todo.id !== e.target.dataset.id);
+  if (data.completed) state.setTodos = [...tempStateArr, data];
+  else state.setTodos = [data, ...tempStateArr];
   
   renderTodos(state.getTodos);
 }
