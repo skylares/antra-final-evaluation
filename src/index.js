@@ -26,6 +26,8 @@ const todosContainer = document.querySelector('.todos-container');
 // function to update the HTML and render the todo list
 function renderTodos(todos) {
 
+  console.log(todos);
+
   if (todos.length === 0) todosContainer.innerHTML = '<p class="todo__empty">no active tasks</p>';
 
   else {
@@ -44,7 +46,11 @@ async function initEvents() {
 
   const response = await fetch(API_URL);
   const todos = await response.json();
-  state.setTodos = todos;
+
+  finishedTodos = todos.filter(todo => todo.completed).reverse();
+  unfinishedTodos = todos.filter(todo => !todo.completed).reverse();
+
+  state.setTodos = [...unfinishedTodos, ...finishedTodos];
   renderTodos(state.getTodos);
 
   todoForm.addEventListener("submit", e => {
@@ -81,10 +87,13 @@ async function deleteTodo(id) {
   });
 
   const response = await fetch(API_URL);
-  const updatedTodos = await response.json();
+  const todos = await response.json();
   
-  renderTodos(updatedTodos);
-  state.setTodos = updatedTodos;
+  finishedTodos = todos.filter(todo => todo.completed).reverse();
+  unfinishedTodos = todos.filter(todo => !todo.completed).reverse();
+
+  state.setTodos = [...unfinishedTodos, ...finishedTodos];
+  renderTodos(state.getTodos);
 }
 
 // EDIT TODO
