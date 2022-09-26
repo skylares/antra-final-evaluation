@@ -22,11 +22,10 @@ const state = new State();
 const todoForm = document.querySelector('.todo-form');
 const inputField = document.querySelector('.todo-form__input');
 const todosContainer = document.querySelector('.todos-container');
+const inputWarning = document.querySelector('#input-warning');
 
 // function to update the HTML and render the todo list
 function renderTodos(todos) {
-
-  console.log(todos);
 
   if (todos.length === 0) todosContainer.innerHTML = '<p class="todo__empty">no active tasks</p>';
 
@@ -62,20 +61,27 @@ async function initEvents() {
 // ADD TODO
 async function addTodo() {
 
-  const newTodo = {
-    id: Date.now().toString(),
-    "title": inputField.value,
-    "completed": false,
-  };
+  if (inputField.value) {
+    inputWarning.className = " input-warning--hidden";
 
-  const response = await fetch(API_URL, {
-    method: 'POST', 
-    body: JSON.stringify(newTodo), 
-    headers: {'Content-Type': 'application/json'}
-  });
-  const data = await response.json(); 
-  state.setTodos = [data, ...state.getTodos];
-  renderTodos(state.getTodos);
+    const newTodo = {
+      id: Date.now().toString(),
+      "title": inputField.value,
+      "completed": false,
+    };
+
+    const response = await fetch(API_URL, {
+      method: 'POST', 
+      body: JSON.stringify(newTodo), 
+      headers: {'Content-Type': 'application/json'}
+    });
+    const data = await response.json(); 
+    state.setTodos = [data, ...state.getTodos];
+    renderTodos(state.getTodos);
+  }
+  else {
+    inputWarning.className = "input-warning--visible";
+  }
 }
 
 // DELETE TODO

@@ -8,12 +8,20 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  padding-bottom: 5vh;
+}
+
 .todos-container {
   padding: 30px;
-  margin-top: 20px;
-  min-width: 400px;
+  min-width: 90vw;
+  min-height: 80vh;
   border-radius: 10px;
-  min-height: 500px;
   background-color: var(--off-white);
   border: 5px solid var(--tan);
 }
@@ -21,10 +29,10 @@
 .todo {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin: 5px 0 5px 0;
   background-color: var(--tan);
   border-radius: 15px;
-  padding: 10px;
+  padding: 10px 15px 10px 15px;
   height: 100px;
 }
 
@@ -35,9 +43,7 @@
 
 .todo__edit-button, .todo__delete-button, .todo-form__button, .todo__edit-button--submit {
   border: none;
-  width: 100px;
-  height: 50px;
-  border-radius: 3px;
+  border-radius: 6px;
   font-size: 20px;
   color: var(--off-white);
 }
@@ -45,10 +51,25 @@
 .todo__edit-button, .todo__edit-button--submit {
   background-color: var(--blue);
   margin-right: 10px;
+  width: 60px;
+  height: 50px;
+  padding-top: 5px;
 }
 
 .todo__delete-button {
   background-color: var(--red);
+  width: 60px;
+  height: 50px;
+  padding-top: 5px;
+}
+
+.todo-form__button {
+  background-color: var(--blue);
+  margin-left: 10px;
+  font-weight: 500;
+  font-size: 25px;
+  width: 100px;
+  height: 50px;
 }
 
 .todo-form__input {
@@ -57,13 +78,6 @@
   height: 50px;
   border-radius: 10px;
   border: 2px solid var(--tan);
-}
-
-.todo-form__button {
-  background-color: var(--blue);
-  margin-left: 10px;
-  font-weight: 500;
-  font-size: 25px;
 }
 
 form {
@@ -83,9 +97,23 @@ form {
 }
 
 .edit-icon, .delete-icon {
-  height: 32px;
-  width: 32px;
+  height: 35px;
+  width: 35px;
   fill: var(--off-white);
   stroke: none;
   pointer-events: none;
+}
+
+.input-warning--visible {
+  visibility: visible;
+  font-size: 20px;
+  margin: 10px 0 10px 0;
+  height: 25px;
+}
+
+.input-warning--hidden {
+  visibility: hidden;
+  text-align: center;
+  margin: 10px 0 10px 0;
+  height: 25px;
 }
